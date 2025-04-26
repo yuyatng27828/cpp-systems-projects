@@ -6,6 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS NO)
 
-add_executable(threaded_array_sum src/main.cpp)
+add_executable(threaded_array_sum src/main.cpp src/array_sum.cpp)
 
 target_include_directories(threaded_array_sum PRIVATE include)
