@@ -12,8 +12,8 @@ struct Block
 
 const size_t BLOCK_SIZE = sizeof(Block);
 
-void *naive_malloc(size_t size);
-void naive_free(void *ptr);
+void *my_malloc(size_t size);
+void my_free(void *ptr);
 Block *get_free_list();
 
 #endif // MALLOC_HPP
