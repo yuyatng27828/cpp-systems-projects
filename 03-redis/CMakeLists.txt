@@ -13,7 +13,7 @@ set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 
 add_executable(redis
     ${SRC_DIR}/main.cpp
-    ${SRC_DIR}/redis.cpp
+    ${SRC_DIR}/server.cpp
 )
 
 target_include_directories(redis PRIVATE ${INCLUDE_DIR})
