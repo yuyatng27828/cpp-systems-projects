@@ -28,21 +28,33 @@ void RingBuffer<T>::put(T item)
 template <class T>
 T RingBuffer<T>::get()
 {
-    // TODO: Implement get logic
-    return T();
+    std::lock_guard<std::mutex> lock(mutex_);
+
+    if (empty())
+    {
+        throw std::runtime_error("Attempted to read from empty buffer");
+    }
+
+    T val = buf_[tail_];
+    advance_tail();
+    full_ = false;
+
+    return val;
 }
 
 template <class T>
 void RingBuffer<T>::reset()
 {
-    // TODO: Implement reset logic
+    std::lock_guard<std::mutex> lock(mutex_);
+    head_ = 0;
+    tail_ = 0;
+    full_ = false;
 }
 
 template <class T>
 bool RingBuffer<T>::empty() const
 {
-    // TODO: Implement empty check;
-    return false;
+    return (!full_ && (head_ == tail_));
 }
 
 template <class T>
@@ -60,8 +72,21 @@ size_t RingBuffer<T>::capacity() const
 template <class T>
 size_t RingBuffer<T>::size() const
 {
-    // TODO: Implement size calculation
-    return 0;
+    std::lock_guard<std::mutex> lock(mutex_);
+
+    if (full_)
+    {
+        return max_size_;
+    }
+
+    if (head_ >= tail_)
+    {
+        return head_ - tail_;
+    }
+    else
+    {
+        return max_size_ - tail_ + head_;
+    }
 }
 
 template <class T>
