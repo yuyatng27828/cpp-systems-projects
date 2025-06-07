@@ -22,9 +22,9 @@ public:
 private:
     std::mutex mutex_;         // Thread safety
     std::unique_ptr<T[]> buf_; // Buffer storage
-    size_t head = 0;           // Write index
-    size_t tail = 0;           // Read index
-    const size_t max_size;     // Fixed buffer capacity
+    size_t head_ = 0;          // Write index
+    size_t tail_ = 0;          // Read index
+    const size_t max_size_;    // Fixed buffer capacity
     bool full_ = false;        // Full flag
 
     void advance_head(); // Move write index

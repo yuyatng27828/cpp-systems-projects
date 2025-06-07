@@ -13,7 +13,16 @@ RingBuffer<T>::RingBuffer(size_t size)
 template <class T>
 void RingBuffer<T>::put(T item)
 {
-    // TODO: Implement put logic
+    std::lock_guard<std::mutex> lock(mutex_);
+
+    buf_[head_] = item;
+    if (full_)
+    {
+        advance_tail();
+    }
+    advance_head();
+
+    full_ = (head_ == tail_);
 }
 
 template <class T>
@@ -39,8 +48,7 @@ bool RingBuffer<T>::empty() const
 template <class T>
 bool RingBuffer<T>::full() const
 {
-    // TODO: Implement full check;
-    return false;
+    return full_;
 }
 
 template <class T>
@@ -59,11 +67,11 @@ size_t RingBuffer<T>::size() const
 template <class T>
 void RingBuffer<T>::advance_head()
 {
-    // TODO: Implement circulat increment of head
+    head_ = (head_ + 1) % max_size_;
 }
 
 template <class T>
 void RingBuffer<T>::advance_tail()
 {
-    // TODO: Implement circular increment of tail
+    tail_ = (tail_ + 1) % max_size_;
 }
