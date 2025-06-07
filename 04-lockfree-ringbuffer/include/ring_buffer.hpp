@@ -20,7 +20,7 @@ public:
     size_t size() const;     // Current number of items
 
 private:
-    std::mutex mutex_;         // Thread safety
+    mutable std::mutex mutex_; // Thread safety
     std::unique_ptr<T[]> buf_; // Buffer storage
     size_t head_ = 0;          // Write index
     size_t tail_ = 0;          // Read index
